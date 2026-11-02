@@ -11,12 +11,18 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock Text="Студент: Петров П.П. (ИС-21)" VerticalAlignment="Center"/>
+            <TextBlock x:Name="HeaderText" Text="Студент:" VerticalAlignment="Center"/>
             <Button Content="Выход" HorizontalAlignment="Right" Width="80" Height="26"
                     Click="Logout_Click"/>
         </Grid>
 
-        <TextBlock Grid.Row="1" Text="Мои оценки" FontSize="14" Margin="0,0,0,8"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,8">
+            <TextBlock Text="Мои оценки" FontSize="14" VerticalAlignment="Center"/>
+            <TextBlock Text="Дисциплина:" VerticalAlignment="Center" Margin="20,0,5,0"/>
+            <ComboBox x:Name="DisciplineFilter" Width="200"
+                      SelectionChanged="DisciplineFilter_SelectionChanged"/>
+            <TextBlock x:Name="AverageText" VerticalAlignment="Center" Margin="20,0,0,0"/>
+        </StackPanel>
 
         <DataGrid Grid.Row="2" x:Name="GradesGrid"
                   AutoGenerateColumns="False"

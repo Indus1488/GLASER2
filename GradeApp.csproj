@@ -8,4 +8,9 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <!-- VS Code не запускает компиляцию XAML при анализе кода и не видит сгенерированные файлы. -->
+  <ItemGroup Condition="'$(DesignTimeBuild)' == 'true'">
+    <Compile Include="obj\$(Configuration)\$(TargetFramework)\*.g.cs" />
+  </ItemGroup>
+
 </Project>

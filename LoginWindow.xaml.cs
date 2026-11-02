@@ -1,5 +1,4 @@
 using System.Windows;
-using System.Windows.Controls;
 
 namespace GradeApp
 {
@@ -12,13 +11,22 @@ namespace GradeApp
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            var role = (RoleCombo.SelectedItem as ComboBoxItem)?.Content?.ToString();
+            var isTeacher = TeacherRadio.IsChecked == true;
+            var user = SampleData.Authenticate(LoginBox.Text, isTeacher ? UserRole.Teacher : UserRole.Student);
 
-            Window next;
-            if (role == "Студент")
-                next = new StudentWindow();
-            else
-                next = new TeacherWindow();
+            if (user == null)
+            {
+                MessageBox.Show(
+                    isTeacher ? "Этот логин не относится к преподавателям." : "Этот логин не относится к студентам.",
+                    "Ошибка входа", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            Session.CurrentUser = user;
+
+            Window next = user.Role == UserRole.Teacher
+                ? new TeacherWindow()
+                : new StudentWindow();
 
             next.Show();
             Close();
